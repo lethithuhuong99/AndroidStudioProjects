@@ -12,13 +12,15 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
 
-    double a,b;
+    double a=Double.NaN;
+    double b=Double.NaN;
+    double c=Double.NaN;
     EditText mEditInput;
     ListView lvHistory;
     ArrayList<String> arrayResults;
     ArrayAdapter<String> arrayAdapter;
-    boolean mAddition;
-
+    boolean mAddition, mSubtraction, mDivision, mMultiply;
+    double result=Double.NaN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +91,17 @@ public class MainActivity extends AppCompatActivity{
     public void doClearC(View view){
         arrayResults.clear();
         arrayAdapter.notifyDataSetChanged();
-        mEditInput.setText("");
+        mEditInput.setText(null);
+        a = Double.NaN;
+        b = Double.NaN;
+        c = Double.NaN;
+
     }
 
     public void doClearCe(View view){
-        mEditInput.setText("");
+
+        mEditInput.setText(null);
+
     }
 
     public void doDelete(View view){
@@ -107,6 +115,7 @@ public class MainActivity extends AppCompatActivity{
     public  void doReset(View view){
         arrayResults.removeAll(arrayResults);
         arrayAdapter.notifyDataSetChanged();
+
     }
     public void doPercent(View view){
 
@@ -165,62 +174,110 @@ public class MainActivity extends AppCompatActivity{
         if (!Double.isNaN(a)){
             b = Double.parseDouble(mEditInput.getText().toString());
             a = a + b;
-
         }
         else
             a = Double.parseDouble(mEditInput.getText().toString());
         String stringResult = a + " +";
-        arrayResults.add(stringResult);
+        arrayResults.add(0, stringResult);
         arrayAdapter.notifyDataSetChanged();
         mEditInput.setText(null);
+    }
+
+    public void doSubtraction(View view){
+        mSubtraction = true;
+        if (!Double.isNaN(a)){
+            b = Double.parseDouble(mEditInput.getText().toString());
+            a = a - b;
+        }
+        else
+            a = Double.parseDouble(mEditInput.getText().toString());
+        String stringResult = a + " - ";
+        arrayResults.add(0, stringResult);
+        arrayAdapter.notifyDataSetChanged();
+        mEditInput.setText(null);
+    }
+
+    public void doMultiply(View view){
+        mMultiply = true;
+        if (!Double.isNaN(a)){
+            b = Double.parseDouble(mEditInput.getText().toString());
+            a = a * b;
+        }
+        else
+            a = Double.parseDouble(mEditInput.getText().toString());
+        String stringResult = a + " * ";
+        arrayResults.add(0, stringResult);
+        arrayAdapter.notifyDataSetChanged();
+        mEditInput.setText(null);
+
+
+    }
+
+    public void doDivision(View view){
+        mDivision = true;
+        if (!Double.isNaN(a)){
+            b = Double.parseDouble(mEditInput.getText().toString());
+            a = a / b;
+        }
+        else
+            a = Double.parseDouble(mEditInput.getText().toString());
+        String stringResult = a + " / ";
+        arrayResults.add(0, stringResult);
+        arrayAdapter.notifyDataSetChanged();
+        mEditInput.setText(null);
+
 
     }
 
     public void doEqual(View view){
-        double result = 0;
-        if (!Double.isNaN(a)){
-            b = Double.parseDouble(mEditInput.getText().toString());
-            result = a + b;
+
+
+        if(mAddition) {
+            if (!Double.isNaN(a)){
+                c = Double.parseDouble(mEditInput.getText().toString());
+                result = a + c;
+            }
+            a = Double.NaN;
+            b = Double.NaN;
+            c = Double.NaN;
+            mAddition = false;
         }
-        arrayResults.add(Double.toString(result));
+        else
+            if (mSubtraction){
+                if (!Double.isNaN(a)){
+                    c = Double.parseDouble(mEditInput.getText().toString());
+                    result = a - c;
+                }
+                a = Double.NaN;
+                b = Double.NaN;
+                c = Double.NaN;
+                mSubtraction = false;
+            }
+            else
+                if (mMultiply) {
+                    if (!Double.isNaN(a)){
+                        c = Double.parseDouble(mEditInput.getText().toString());
+                        result = a * c;
+                    }
+                    a = Double.NaN;
+                    b = Double.NaN;
+                    c = Double.NaN;
+                    mMultiply = false;
+                }
+                else
+                    if (mDivision) {
+                        if (!Double.isNaN(a)){
+                            c = Double.parseDouble(mEditInput.getText().toString());
+                            result = a / c;
+                        }
+                        a = Double.NaN;
+                        b = Double.NaN;
+                        c = Double.NaN;
+
+                        mDivision = false;
+                    }
+        arrayResults.add(0, Double.toString(result));
         arrayAdapter.notifyDataSetChanged();
         mEditInput.setText(Double.toString(result));
     }
-//
-//    public void doAddition(View v) {
-//        int a , b;
-//        a = Integer.parseInt(mEditInput.getText().toString());
-//        b = Integer.parseInt(mEditInput.getText().toString());
-//        String stringResult = a + " + " + b + " = " + (a+b);
-//        arrayResults.add(0,stringResult);
-//        arrayAdapter.notifyDataSetChanged();
-//    }
-//
-//    public void doSubtraction(View v) {
-//        int a , b;
-//        a = Integer.parseInt(mEditInput.getText().toString());
-//        b = Integer.parseInt(mEditInput.getText().toString());
-//        String stringResult = a + " + " + b + " = " + (a-b);
-//        arrayResults.add(0,stringResult);
-//        arrayAdapter.notifyDataSetChanged();
-//
-//    }
-//    public void doMultiply (View v) {
-//        float a , b;
-//        a = Float.parseFloat(mEditInput.getText().toString());
-//        b = Float.parseFloat(mEditInput.getText().toString());
-//        String stringResult = a + " * " + b + " = " + (a*b);
-//        arrayResults.add(0,stringResult);
-//        arrayAdapter.notifyDataSetChanged();
-//    }
-//
-//    public void doDivision(View v) {
-//        float a , b;
-//        a = Float.parseFloat(mEditInput.getText().toString());
-//        b = Float.parseFloat(mEditInput.getText().toString());
-//        String stringResult = a + " / " + b + " = " + (a/b);
-//        arrayResults.add(0,stringResult);
-//        arrayAdapter.notifyDataSetChanged();
-//    }
-
 }

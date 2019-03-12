@@ -64,6 +64,7 @@
                 android:layout_weight="1"
                 android:text="%"
                 android:onClick="doPercent"
+
                 />
 
             <Button
@@ -72,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="√"
-                android:onClick="doSqrt"/>
+                android:onClick="doSqrt"
+                />
 
             <Button
                 android:id="@+id/btn_square"
@@ -80,7 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="x^2"
-                android:onClick="doSquare"/>
+                android:onClick="doSquare"
+                />
 
             <Button
                 android:id="@+id/btn_1_div_x"
@@ -88,7 +91,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="1/x"
-                android:onClick="doOneDivX"/>
+                android:onClick="doOneDivX"
+                />
 
         </LinearLayout>
 
@@ -103,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="CE"
-                android:onClick="doClearCe"/>
+                android:onClick="doClearCe"
+                />
 
             <Button
                 android:id="@+id/btn_c"
@@ -111,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="C"
-                android:onClick="doClearC"/>
+                android:onClick="doClearC"
+                />
 
             <Button
                 android:id="@+id/btn_del"
@@ -119,7 +125,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="⌫"
-                android:onClick="doDelete"/>
+                android:onClick="doDelete"
+                />
 
             <Button
                 android:id="@+id/btn_div"
@@ -127,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="/"
+                android:onClick="doDivision"
                 />
 
         </LinearLayout>
@@ -165,7 +173,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="X" />
+                android:text="X"
+                android:onClick="doMultiply"/>
 
         </LinearLayout>
 
@@ -203,7 +212,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-" />
+                android:text="-"
+                android:onClick="doSubtraction"/>
 
         </LinearLayout>
 
