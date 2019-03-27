@@ -10,18 +10,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class AddNewContactActivity extends AppCompatActivity {
 
     private EditText mEdtFullName, mEdtCompany, mEdtTitle, mEdtMobile, mEdtEmail;
     private TextView mTvCreatedAt;
     private ImageView mIvAvata;
     private Button mBtnCancel, mBtnSave;
+    private MyDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_contact);
 
+        db = new MyDatabase(this);
         mBtnSave = (Button)findViewById(R.id.btn_save);
         mBtnCancel = (Button)findViewById(R.id.btn_cancel);
 
@@ -45,6 +51,11 @@ public class AddNewContactActivity extends AppCompatActivity {
         newContact.setTitle(mEdtTitle.getText().toString());
         newContact.setMobile(mEdtMobile.getText().toString());
         newContact.setEmail(mEdtEmail.getText().toString());
+
+        String dateInString = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault()).format(new Date());
+        newContact.setCreatedAt(dateInString);
+        newContact.setmId(db.addContact(newContact));
+
         return newContact;
     }
 

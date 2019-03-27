@@ -4,18 +4,20 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Contact implements Serializable {
-    private String fullname;
+    private String fullName;
     private String company;
     private String title;
     private String mobile;
     private String email;
-    private Date createdAt;
+    private String createdAt;
     private String avatar;
+    private int mId;
 
     public Contact(){}
 
-    public Contact(String fullname, String company, String title, String mobile, String email) {
-        this.fullname = fullname;
+    public Contact(int mId, String fullName, String company, String title, String mobile, String email) {
+        this.mId= mId;
+        this.fullName = fullName;
         this.company = company;
         this.title = title;
         this.mobile = mobile;
@@ -24,12 +26,20 @@ public class Contact implements Serializable {
         this.avatar = avatar;
     }
 
-    public String getFullname() {
-        return fullname;
+    public int getmId() {
+        return mId;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setmId(int mId) {
+        this.mId = mId;
+    }
+
+    public String getFullname() {
+        return fullName;
+    }
+
+    public void setFullname(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getCompany() {
@@ -64,11 +74,11 @@ public class Contact implements Serializable {
         this.email = email;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

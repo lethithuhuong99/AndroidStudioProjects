@@ -18,10 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     ListView lvContacts;
-    Button mBtnAdd;
+    private Button mBtnAdd;
     ArrayList<String> listContacts;
     ArrayAdapter<String> adapter;
     ArrayList<Contact> listObjectContact;
+    private MyDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,23 +30,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        db = new MyDatabase(this);
         lvContacts = (ListView)findViewById(R.id.lv_contact);
         mBtnAdd = (Button)findViewById(R.id.btn_add_contact);
 
         listContacts = new ArrayList<String>();
         listObjectContact = new ArrayList<Contact>();
-        Contact contact1 = new Contact("Thu Huong", "VNUK", "Mss", "0832031576", "huong.le170205@vnuk.edu.vn");
-        Contact contact2 = new Contact("Hoang Quan", "VNUK", "Mr", "0123456789", "quan.hoang170203@vnuk.edu.vn");
+
+//        Contact contact1 = new Contact("Thu Huong", "VNUK", "Mss", "0832031576", "huong.le170205@vnuk.edu.vn");
+//        Contact contact2 = new Contact("Hoang Quan", "VNUK", "Mr", "0123456789", "quan.hoang170203@vnuk.edu.vn");
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listContacts);
         lvContacts.setAdapter(adapter);
-        listContacts.add(contact1.getFullname());
-        listContacts.add(contact2.getFullname());
-        listObjectContact.add(contact1);
-        listObjectContact.add(contact2);
-        adapter.notifyDataSetChanged();
+//        listContacts.add(contact1.getFullname());
+//        listContacts.add(contact2.getFullname());
+//        listObjectContact.add(contact1);
+//        listObjectContact.add(contact2);
+        getData();
         setOnClickOnItem();
         onClickAddBtn();
+        adapter.notifyDataSetChanged();
+
     }
 
     public Contact findContact (String name) {
@@ -93,5 +98,20 @@ public class MainActivity extends AppCompatActivity {
             listContacts.add(contact.getFullname());
             adapter.notifyDataSetChanged();
         }
+    }
+
+    public void getData(){
+        listObjectContact.clear();
+        listObjectContact = db.getAllContacts();
+        for (int i = 0; i < listObjectContact.size(); i++) {
+            listContacts.add(listObjectContact.get(i).getFullname());
+        }
+
+//        for (Contact contact:listObjectContact) {
+//            listContacts.add(contact.getFullname());
+//        }
+
+        db.close();
+        adapter.notifyDataSetChanged();
     }
 }
