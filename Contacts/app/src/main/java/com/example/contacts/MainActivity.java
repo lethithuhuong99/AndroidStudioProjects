@@ -1,9 +1,12 @@
 package com.example.contacts;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,11 +19,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    ListView lvContacts;
+    RecyclerView recyclerView;
     private Button mBtnAdd;
-    ArrayList<String> listContacts;
-    ArrayAdapter<String> adapter;
+    ContactAdapter adapter;
     ArrayList<Contact> listObjectContact;
     private MyDatabase db;
 
@@ -31,28 +32,48 @@ public class MainActivity extends AppCompatActivity {
 
 
         db = new MyDatabase(this);
-        lvContacts = (ListView)findViewById(R.id.lv_contact);
         mBtnAdd = (Button)findViewById(R.id.btn_add_contact);
-
-        listContacts = new ArrayList<String>();
         listObjectContact = new ArrayList<Contact>();
 
-//        Contact contact1 = new Contact("Thu Huong", "VNUK", "Mss", "0832031576", "huong.le170205@vnuk.edu.vn");
-//        Contact contact2 = new Contact("Hoang Quan", "VNUK", "Mr", "0123456789", "quan.hoang170203@vnuk.edu.vn");
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listContacts);
-        lvContacts.setAdapter(adapter);
-//        listContacts.add(contact1.getFullname());
-//        listContacts.add(contact2.getFullname());
-//        listObjectContact.add(contact1);
-//        listObjectContact.add(contact2);
         getData();
-        setOnClickOnItem();
+        setRecyclerView();
+//        setOnClickOnItem();
         onClickAddBtn();
         adapter.notifyDataSetChanged();
 
     }
 
+    public  void setRecyclerView() {
+        recyclerView = (RecyclerView) findViewById(R.id.rv_contact);
+        recyclerView.setHasFixedSize(true);
+
+        adapter = new ContactAdapter(listObjectContact, MainActivity.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnItemTouchListener(new RecycleTouchListener(this, recyclerView,
+                new RecycleTouchListener.OnItemClickListner() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(getBaseContext(), EditContactActivity.class);
+                        Contact getContact = listObjectContact.get(position);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("Contact", getContact);
+                        intent.putExtra("My package", bundle);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Contact getContact = listObjectContact.get(position);
+                        db.deleteContact(getContact);
+                        listObjectContact.remove(getContact);
+                        Toast.makeText(MainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                        adapter.notifyDataSetChanged();
+                    }
+                }));
+    }
     public Contact findContact (String name) {
         for (Contact contact:listObjectContact) {
             if (name == contact.getFullname())
@@ -61,21 +82,21 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    public void setOnClickOnItem(){
-        lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
-                String item = lvContacts.getItemAtPosition(position).toString();
-                Contact getContact = findContact(item);
-                    Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("Contact", getContact);
-                intent.putExtra("My package", bundle);
-                startActivity(intent);
-            }
-        });
-    }
+//    public void setOnClickOnItem(){
+//        lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
+//                String item = lvContacts.getItemAtPosition(position).toString();
+//                Contact getContact = findContact(item);
+//                    Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("Contact", getContact);
+//                intent.putExtra("My package", bundle);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 
     public void onClickAddBtn() {
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             Contact contact = (Contact) data.getExtras().getSerializable("RETURN");
 
             listObjectContact.add(contact);
-            listContacts.add(contact.getFullname());
+//            listContacts.add(contact.getFullname());
             adapter.notifyDataSetChanged();
         }
     }
@@ -103,15 +124,13 @@ public class MainActivity extends AppCompatActivity {
     public void getData(){
         listObjectContact.clear();
         listObjectContact = db.getAllContacts();
-        for (int i = 0; i < listObjectContact.size(); i++) {
-            listContacts.add(listObjectContact.get(i).getFullname());
-        }
 
 //        for (Contact contact:listObjectContact) {
 //            listContacts.add(contact.getFullname());
 //        }
 
         db.close();
-        adapter.notifyDataSetChanged();
     }
+
+
 }
