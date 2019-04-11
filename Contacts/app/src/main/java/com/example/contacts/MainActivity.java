@@ -1,8 +1,12 @@
 package com.example.contacts;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ContactAdapter adapter;
     ArrayList<Contact> listObjectContact;
     private MyDatabase db;
+    private ImageView mIvCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         db = new MyDatabase(this);
         mBtnAdd = (Button)findViewById(R.id.btn_add_contact);
+        mIvCall = (ImageView)findViewById(R.id.iv_call);
         listObjectContact = new ArrayList<Contact>();
 
         getData();
+
+
         setRecyclerView();
-//        setOnClickOnItem();
         onClickAddBtn();
         adapter.notifyDataSetChanged();
 
@@ -82,21 +90,6 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-//    public void setOnClickOnItem(){
-//        lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(MainActivity.this, EditContactActivity.class);
-//                String item = lvContacts.getItemAtPosition(position).toString();
-//                Contact getContact = findContact(item);
-//                    Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("Contact", getContact);
-//                intent.putExtra("My package", bundle);
-//                startActivity(intent);
-//            }
-//        });
-//    }
 
     public void onClickAddBtn() {
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             Contact contact = (Contact) data.getExtras().getSerializable("RETURN");
 
             listObjectContact.add(contact);
-//            listContacts.add(contact.getFullname());
             adapter.notifyDataSetChanged();
         }
     }
@@ -125,12 +117,18 @@ public class MainActivity extends AppCompatActivity {
         listObjectContact.clear();
         listObjectContact = db.getAllContacts();
 
-//        for (Contact contact:listObjectContact) {
-//            listContacts.add(contact.getFullname());
-//        }
-
         db.close();
     }
 
 
+    public void onClick(View view) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("0832031576"));
+
+        if (ActivityCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startActivity(callIntent);
+    }
 }

@@ -53,7 +53,7 @@ public class AddNewContactActivity extends AppCompatActivity {
         newContact.setEmail(mEdtEmail.getText().toString());
 
         String dateInString = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault()).format(new Date());
-        newContact.setCreatedAt(dateInString);
+        newContact.setCreatedAt("Create at: " + dateInString);
         newContact.setmId(db.addContact(newContact));
 
         return newContact;
