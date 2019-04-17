@@ -1,12 +1,28 @@
 package com.example.drawerlayout;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 
 /**
@@ -28,6 +44,11 @@ public class TodoFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private Button mBtnAdd;
+    private CheckBox mCbStatus1;
+    private ImageButton mIbHeart1;
+    private TextView mTvTodo1;
 
     public TodoFragment() {
         // Required empty public constructor
@@ -58,13 +79,67 @@ public class TodoFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todo, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_todo, container, false);
+        mBtnAdd = (Button)v.findViewById(R.id.btn_add);
+        mTvTodo1 = (TextView)v.findViewById(R.id.tv_todo1);
+        mCbStatus1 = (CheckBox)v.findViewById(R.id.cb_status1);
+        mIbHeart1 = (ImageButton)v.findViewById(R.id.ib_heart1);
+
+        mBtnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("/todos");
+                    Log.d("check" , myRef.getRef().toString());
+                    String id = "todo1";
+                    String name = "This is the first todo";
+                    String email = null;
+                    Pattern gmailPattern = Patterns.EMAIL_ADDRESS;
+                    Account[] accounts = AccountManager.get(getContext()).getAccounts();
+                    for (Account account : accounts) {
+                        if (gmailPattern.matcher(account.name).matches()) {
+                            email = account.name;
+                        }
+                    }
+
+                    boolean status = false;
+                    String dateInString = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    myRef.child(id).child("name").setValue(name);
+                    myRef.child(id).child("status").setValue(status);
+                    myRef.child(id).child("date").setValue(dateInString);
+                    myRef.child(id).child("Email").setValue(email);
+                }
+                catch (Exception ex){
+                    ex.printStackTrace();
+                }
+
+                try {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("/todos");
+                    Log.d("check" , myRef.getRef().toString());
+                    String id = "todo2";
+                    String name = "This is the seccond todo";
+                    boolean status = true;
+                    String dateInString = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    myRef.child(id).child("name").setValue(name);
+                    myRef.child(id).child("status").setValue(status);
+                    myRef.child(id).child("date").setValue(dateInString);
+                }
+                catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

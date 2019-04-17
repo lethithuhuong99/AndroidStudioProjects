@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private Button mBtnLogin, mBtnRegister, mBtnResetPassword;
+    private Button mBtnLogin, mBtnRegister;
     private EditText mEdtUserName, mEdtPassword;
     private ProgressBar progressBar;
     @Override
@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         mBtnLogin = (Button)findViewById(R.id.btn_login);
         mBtnRegister = (Button)findViewById(R.id.btn_register);
-        mBtnResetPassword = (Button)findViewById(R.id.btn_reset_password);
         mEdtUserName = (EditText)findViewById(R.id.edt_username);
         mEdtPassword = (EditText)findViewById(R.id.edt_password);
 
@@ -52,14 +51,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mBtnResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
                 startActivity(intent);
             }
         });

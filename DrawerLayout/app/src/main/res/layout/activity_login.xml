@@ -73,18 +73,6 @@
             />
 
         <Button
-            android:id="@+id/btn_reset_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@null"
-            android:text="Forgot your password?"
-            android:textAllCaps="false"
-            android:layout_gravity="center"
-            android:textSize="20dp"
-            />
-
-        <Button
             android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
