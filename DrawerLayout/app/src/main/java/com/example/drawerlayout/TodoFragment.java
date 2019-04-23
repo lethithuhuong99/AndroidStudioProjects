@@ -16,6 +16,8 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -49,6 +51,7 @@ public class TodoFragment extends Fragment {
     private CheckBox mCbStatus1;
     private ImageButton mIbHeart1;
     private TextView mTvTodo1;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public TodoFragment() {
         // Required empty public constructor
@@ -116,27 +119,12 @@ public class TodoFragment extends Fragment {
                     myRef.child(id).child("name").setValue(name);
                     myRef.child(id).child("status").setValue(status);
                     myRef.child(id).child("date").setValue(dateInString);
-                    myRef.child(id).child("Email").setValue(email);
+                    myRef.child(id).child("Email").setValue(user.getEmail());
                 }
                 catch (Exception ex){
                     ex.printStackTrace();
                 }
-
-                try {
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("/todos");
-                    Log.d("check" , myRef.getRef().toString());
-                    String id = "todo2";
-                    String name = "This is the seccond todo";
-                    boolean status = true;
-                    String dateInString = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                    myRef.child(id).child("name").setValue(name);
-                    myRef.child(id).child("status").setValue(status);
-                    myRef.child(id).child("date").setValue(dateInString);
-                }
-                catch (Exception ex){
-                    ex.printStackTrace();
-                }
+                
             }
         });
         return v;
