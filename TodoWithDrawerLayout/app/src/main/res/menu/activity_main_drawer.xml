@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_TodoList"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="Todo List" />
+        <item
+            android:id="@+id/nav_Favourite"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="Favourite" />
+    </group>
+
+    <item android:title="User">
+        <menu>
+            <item
+                android:id="@+id/nav_Logout"
+                android:icon="@drawable/ic_input_black_24dp"
+                android:title="Logout" />
+            <item
+                android:id="@+id/nav_Register"
+                android:icon="@drawable/ic_person_add_black_24dp"
+                android:title="Register" />
+        </menu>
+    </item>
+
+</menu>

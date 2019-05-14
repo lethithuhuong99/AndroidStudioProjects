@@ -4,16 +4,22 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class MyView extends View implements Runnable {
-    private int x1 = 100, y1 = 100, dx1 = 10, dy1 = 10, radius = 100, yBar = 1500, xBar = 300, widthSlideBar = 400,heightSlideBar= 100;
-    private int x2 = 100, y2 = 100, dx2 = 20, dy2 = 20;
+    private int x1 = 100, y1 = 100, dx1 = 10, dy1 = 10, radius = 100, yBar = 1500, xBar = 0, widthSlideBar = 400,heightSlideBar= 100;
+    private int x2 = 200, y2 = 200, dx2 = 20, dy2 = 20;
     Bitmap ballResize,ballResize2;
     Bitmap bgBitmap;
     Bitmap slideBarResize;
+    ArrayList<Brick> lists;
 
     public MyView (Context  context, AttributeSet attrs) {
         super(context,attrs);
@@ -24,6 +30,11 @@ public class MyView extends View implements Runnable {
         ballResize2 = Bitmap.createScaledBitmap(ball2,radius,radius,false);
         Bitmap slideBar = BitmapFactory.decodeResource(getResources(),R.drawable.slidebar);
         slideBarResize = Bitmap.createScaledBitmap(slideBar,widthSlideBar,heightSlideBar,false);
+        lists = new ArrayList<Brick>();
+        for(int i = 0 ; i < 7 ; i++){
+            Brick brick = new Brick(210*i , 0, 200  ,100);
+            lists.add(brick);
+        }
     }
 
     @Override
@@ -36,6 +47,20 @@ public class MyView extends View implements Runnable {
         canvas.drawBitmap(ballResize,x1,y1,null);
         canvas.drawBitmap(ballResize2,x2,y2,null);
         canvas.drawBitmap(slideBarResize, xBar,yBar, null);
+        Paint paint = new Paint();
+        paint.setColor(Color.RED);
+
+        for(Brick element : lists){
+            element.drawBrick(canvas , paint);
+            if(element.getVisibility()){
+                if (Math.sqrt(Math.pow(x1-element.getX(),2)+ Math.pow(y1-element.getY(),2))<50) {
+                    element.setVisible(false);
+                    dy1 = -dy1;
+
+                }
+            }
+        }
+
         if (x1 + radius > x || x1 < 0)
         {
             dx1 = -dx1;
@@ -56,14 +81,23 @@ public class MyView extends View implements Runnable {
             dy2 = -dy2;
         }
 
+        Log.d("bar", "BAR: " + "xBar = " + xBar +" yBar = " + yBar);
 
+        if (Math.sqrt(Math.pow(x1-x2,2)+ Math.pow(y1-y2,2))<radius) {
+            dy1 = -dy1;
+            dx1 = -dx1;
+            dy2 = -dy2;
+            dx2 = -dx2;
+        }
 
-//        if ((y1 + radius > heightSlideBar) && (x1 + radius <= xBar + widthSlideBar) && (x1 + radius >= xBar)) {
-//            dy1 = -dy1;
-//            dx1 = -dx1;
-//        }
+        if ( (x1 <= xBar + widthSlideBar) && (x1+radius >= xBar) && (yBar == y1+radius)) {
+            dy1 = -dy1;
+        }
+
         update();
         invalidate();
+
+
     }
 
     private void update() {

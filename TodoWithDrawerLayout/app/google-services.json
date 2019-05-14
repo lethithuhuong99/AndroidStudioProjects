@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "458858280947",
+    "firebase_url": "https://project-todowithdrawerlayout.firebaseio.com",
+    "project_id": "project-todowithdrawerlayout",
+    "storage_bucket": "project-todowithdrawerlayout.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458858280947:android:940033253075c546",
+        "android_client_info": {
+          "package_name": "com.example.todowithdrawerlayout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458858280947-n10305oqpl73dg5u9bp269862dpj9ap3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.todowithdrawerlayout",
+            "certificate_hash": "f77a5dc702069d657d2a9ffe10d5f4c0b33f9afd"
+          }
+        },
+        {
+          "client_id": "458858280947-crt10rbm96dkh2kn24s5c2rhgaj5mhkd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBztue_mN9HPuiCkNZ0uRN1i4atTKGvDlE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458858280947-crt10rbm96dkh2kn24s5c2rhgaj5mhkd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
