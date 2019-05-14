@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "370508968621",
+    "firebase_url": "https://drawerlayout-75cc1.firebaseio.com",
+    "project_id": "drawerlayout-75cc1",
+    "storage_bucket": "drawerlayout-75cc1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370508968621:android:3e472c092d5e9b4f",
+        "android_client_info": {
+          "package_name": "com.example.drawerlayout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370508968621-tbslou7a41tebteqt6t19694g94hj2jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKT5KAH_1fcz9ZOoU-07XK0d7qRFQxDZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370508968621-tbslou7a41tebteqt6t19694g94hj2jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

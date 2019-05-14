@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_weather"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Weather" />
+        <item
+            android:id="@+id/nav_weather_map"
+            android:icon="@drawable/ic_location_on_black_24dp"
+            android:title="Weather Map" />
+        <item
+            android:id="@+id/nav_graphs"
+            android:icon="@drawable/ic_show_chart_black_24dp"
+            android:title="Graphs" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Setting" />
+
+    </group>
+
+    <item android:title="User">
+        <menu>
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/ic_add_box_black_24dp"
+                android:title="Login" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Logout" />
+            <item
+                android:id="@+id/nav_register"
+                android:icon="@drawable/ic_person_add_black_24dp"
+                android:title="Register" />
+        </menu>
+    </item>
+
+</menu>
